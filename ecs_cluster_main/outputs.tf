@@ -62,9 +62,36 @@ output "web_server_ids" {
 
 
 output "aws_lb_id" {
-  value = aws_lb.webserver.id
+  value = aws_lb.ecs_cluster_alb.id
 }
 
 output "aws_lb_target_group_id" {
-  value = aws_lb_target_group.webserver.id
+  value = aws_lb_target_group.ecs_cluster_alb.id
+}
+
+output "aws_lb_listener_id" {
+  value = aws_lb_listener.ecs_cluster_alb.id
+}
+
+output "aws_lb_listener_arn" {
+  value = aws_lb_listener.ecs_cluster_alb.arn
+}
+
+
+
+output "aws_ecs_cluster_id" {
+  value = aws_ecs_cluster.app_cluster.id
+}
+
+
+output "ecs_cluster_iam_role_id" {
+  value = aws_iam_role.ecs_cluster_role.id
+}
+
+output "ecs_cluster_iam_role_arn" {
+  value = aws_iam_role.ecs_cluster_role.arn
+}
+
+output "aws_iam_role_policy_for_ecs_cluster_id" {
+  value = aws_iam_role_policy.ecs_cluster_policy.id
 }

@@ -1,19 +1,20 @@
 
 #Initialization of application load balancer
 
-resource "aws_lb" "webserver" {
-  name            = "webserver-alb"
+resource "aws_lb" "ecs_cluster_alb" {
+  name            = "ecs-cluster-alb"
   subnets         = aws_subnet.public_subnets[*].id
   security_groups = [aws_security_group.alb.id]
+  internal        = false
 }
 
 
-resource "aws_lb_target_group" "webserver" {
-  name        = "webservers-tg"
+resource "aws_lb_target_group" "ecs_cluster_alb" {
+  name        = "ecs-cluster-alb-tg"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.demoecs_vpc.id
-  target_type = "instance"
+  target_type = "ip"
   health_check {
     healthy_threshold   = "3"
     interval            = "30"
@@ -25,21 +26,23 @@ resource "aws_lb_target_group" "webserver" {
   }
 
 }
-
+/*
 resource "aws_lb_target_group_attachment" "webservers" {
   count            = length(aws_instance.web_server[*].id)
-  target_group_arn = aws_lb_target_group.webserver.id
+  target_group_arn = aws_lb_target_group.ecs_cluster_alb.id
   target_id        = element(aws_instance.web_server[*].id, count.index)
   port             = 80
 }
+*/
 
 
-resource "aws_lb_listener" "webserver" {
-  load_balancer_arn = aws_lb.webserver.id
+resource "aws_lb_listener" "ecs_cluster_alb" {
+  load_balancer_arn = aws_lb.ecs_cluster_alb.id
   port              = 80
   protocol          = "HTTP"
   default_action {
-    target_group_arn = aws_lb_target_group.webserver.id
+    target_group_arn = aws_lb_target_group.ecs_cluster_alb.id
     type             = "forward"
   }
+  depends_on = [aws_lb_target_group.ecs_cluster_alb]
 }
