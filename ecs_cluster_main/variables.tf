@@ -3,6 +3,8 @@ variable "aws_region" {
   default = "eu-central-1"
 }
 
+
+
 variable "bucket_name" {
   type    = string
   default = "malkosergeyseconddemoecs"
@@ -54,4 +56,58 @@ variable "private_subnets_cidr" {
 
 variable "bastion_ssh_key_name" {
   default = "test"
+}
+
+
+#ervice variables
+
+variable "app_port" {
+  default = 80
+}
+
+variable "task_definition_name" {
+  type    = string
+  default = "nginxtask"
+}
+
+variable "ecs_service_name" {
+  type = string
+}
+
+variable "docker_image_url" {
+  type    = string
+  default = "182009040698.dkr.ecr.eu-central-1.amazonaws.com/nginx-test:latest"
+}
+
+variable "fargate_cpu" {
+  default = "256"
+}
+
+variable "fargate_memory" {
+  default = "512"
+}
+
+variable "image_tag" {
+  type    = string
+  default = "latest"
+
+}
+
+variable "taskdef_template" {
+  default = "taskdef.json"
+}
+
+
+variable "ecr_repository_url" {
+  type    = string
+  default = "182009040698.dkr.ecr.eu-central-1.amazonaws.com/nginx-test:latest"
+}
+#defines how many tasks to run
+variable "app_count" {
+
+}
+
+variable "app_name" {
+  type    = string
+  default = "test-nginx"
 }

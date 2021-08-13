@@ -95,3 +95,20 @@ output "ecs_cluster_iam_role_arn" {
 output "aws_iam_role_policy_for_ecs_cluster_id" {
   value = aws_iam_role_policy.ecs_cluster_policy.id
 }
+
+output "fargate_iam_role_id" {
+  value = aws_iam_role.fargate_iam_role.id
+}
+
+output "fargate_iam_role_arn" {
+  value = aws_iam_role.fargate_iam_role.arn
+}
+
+output "fargate_iam_role_policy_id" {
+  value = aws_iam_role_policy.fargate_iam_role_policy.id
+}
+
+
+output "ecs_task_definition_arn" {
+  value = aws_ecs_task_definition.test-nginx.arn
+}

@@ -105,3 +105,27 @@ resource "aws_security_group" "webserver" {
     Name = "webserver-sg"
   }
 }
+
+
+#Security group ecs service
+resource "aws_security_group" "app_security_group" {
+  name        = "${var.ecs_service_name}-SG"
+  description = "Security group for our application"
+  vpc_id      = aws_vpc.demoecs_vpc.id
+
+  ingress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb.id]
+
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+
+  }
+}
